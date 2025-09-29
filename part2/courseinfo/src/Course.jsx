@@ -12,15 +12,18 @@ const Part = ({ part }) => (
   </p>
 )
 
-// const Total = ({total}) => <p>Number of exercises {total}</p>
+const Total = ({ parts }) => (
+  <p>
+    Number of exercises {parts.reduce((sum, part) => sum += part.exercises, 0)}
+  </p>
+)
 
-const Course = ({ course }) => {
-  return (
-    <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-    </div>
-  )
-}
+const Course = ({ course }) => (
+  <div>
+    <Header course={course.name} />
+    <Content parts={course.parts} />
+    <Total parts={course.parts} />
+  </div>
+)
 
 export default Course
