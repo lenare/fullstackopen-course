@@ -10,7 +10,7 @@ const PersonForm = ({ persons, setPersons }) => {
     if (persons.some((entry) => entry.name === newName)) {
       alert(`${newName} is already added to phonebook`)
     } else {
-      const personObject = { name: newName, number: newNumber, id: persons.length + 1 }
+      const personObject = { name: newName, number: newNumber, id: String(persons.length + 1) }
       personService
         .create(personObject)
         .then(returnedPerson => {

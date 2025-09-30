@@ -27,7 +27,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm persons={persons} setPersons={setPersons} />
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
+      <Persons persons={filteredPersons} setPersons={setPersons} />
     </div>
   )
 }
