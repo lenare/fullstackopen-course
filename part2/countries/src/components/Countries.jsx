@@ -1,4 +1,4 @@
-const Countries = ({ countries }) => {
+const Countries = ({ countries, setCountries }) => {
   if (countries === null) {
     return <div>No countries found that match the filter</div>
   } else if (countries.length === 0) {
@@ -25,7 +25,7 @@ const Countries = ({ countries }) => {
   } else {
     return (
       <div>
-        {countries.map(country => <div key={country.name.common}>{country.name.common}</div>)}
+        {countries.map(country => <div key={country.name.common}>{country.name.common} <button onClick={() => setCountries([country])}>Show</button></div>)}
       </div>
     )
   }

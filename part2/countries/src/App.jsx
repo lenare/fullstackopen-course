@@ -27,7 +27,7 @@ function App() {
     <div>
       <h2>Countries</h2>
       <Filter filter={filter} setFilter={setFilter} />
-      <Countries countries={countries} />
+      <Countries countries={countries} setCountries={setCountries} />
     </div>
   )
 }
