@@ -1,14 +1,14 @@
-GET http://localhost:3001/api/persons/4
+GET http://localhost:3001/api/persons
 
 ###
-DELETE http://localhost:3001/api/persons/4
+DELETE http://localhost:3001/api/persons/2
 
 ###
 POST http://localhost:3001/api/persons HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Ada Lovelace",
+    "name": "Lena Lovelace",
     "number": "0123"
 }
 

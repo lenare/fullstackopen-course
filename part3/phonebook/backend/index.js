@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const app = express()
 
 app.use(express.json())
@@ -7,6 +8,7 @@ morgan.token('body', function getId(req) {
     return JSON.stringify(req.body)
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+app.use(cors())
 
 let persons = [
     {
@@ -55,8 +57,9 @@ app.get('/api/persons/:id', (request, response) => {
 app.delete('/api/persons/:id', (request, response) => {
     const person = persons.find(person => person.id === request.params.id)
     if (person) {
-        persons.filter(person => person.id !== request.params.id)
-        response.status(204).end()
+        persons = persons.filter(person => person.id !== request.params.id)
+        // Return deleted person so that frontend can process it
+        response.json(person)
     } else {
         response.status(404).end()
     }
@@ -84,7 +87,7 @@ app.post('/api/persons', (request, response) => {
     const person = {
         name: body.name,
         number: body.number,
-        id: Math.floor(Math.random() * 10000000),
+        id: String(Math.floor(Math.random() * 10000000)),
     }
 
     persons = persons.concat(person)
@@ -92,7 +95,7 @@ app.post('/api/persons', (request, response) => {
     response.json(person)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
