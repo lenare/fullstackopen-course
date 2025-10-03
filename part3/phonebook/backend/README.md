@@ -1,7 +1,3 @@
-# fullstackopen-course
-
-Submission repo for the [Full Stack Open course](https://fullstackopen.com/en/).
-
-## Part 3 - Phonebook
+# Phonebook
 
 Deployed Backend URL: [https://fullstackopen-phonebook-backend-go4g.onrender.com/](https://fullstackopen-phonebook-backend-go4g.onrender.com/)
