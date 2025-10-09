@@ -1,6 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/person')
+
 const app = express()
 
 app.use(express.json())
@@ -43,7 +46,9 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -79,21 +84,16 @@ app.post('/api/persons', (request, response) => {
             error: 'number missing'
         })
     }
-    if (persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())) {
-        return response.status(400).json({
-            error: 'name must be unique'
-        })
-    }
 
-    const person = {
+    const person = new Person({
         name: body.name,
         number: body.number,
-        id: String(Math.floor(Math.random() * 10000000)),
-    }
+    })
 
-    persons = persons.concat(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 
-    response.json(person)
 })
 
 const PORT = process.env.PORT || 3001
