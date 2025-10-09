@@ -6,7 +6,6 @@ const Persons = ({ persons, setPersons }) => {
       personService
         .deleteById(person.id)
         .then(deletedPerson => {
-          console.log(deletedPerson.id)
           setPersons(persons.filter(person => person.id !== deletedPerson.id)) }
         )
     }
