@@ -43,6 +43,7 @@ const PersonForm = ({ persons, setPersons, setMessage }) => {
             )
           })
           .catch(error => {
+            console.log("here")
             setMessage(`Error when updating number of ${updatedPerson.name}. Person has already been removed from server.`)
             setTimeout(() => {
               setMessage(null)
@@ -61,6 +62,15 @@ const PersonForm = ({ persons, setPersons, setMessage }) => {
         setPersons(persons.concat(returnedPerson))
         finalizeUpdate(returnedPerson, `Added ${returnedPerson.name}`)
       })
+        .catch(error => {
+          setMessage(`Error when adding person ${newName}: ${error.response.data.error}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000)
+          personService
+            .getAll()
+            .then(allPersons => setPersons(allPersons))
+        })
     }
   }
 
