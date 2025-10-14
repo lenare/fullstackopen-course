@@ -4,7 +4,7 @@ const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
 const assert = require('node:assert')
-const helper = require('./list_helper.test')
+const helper = require('./test_helper')
 
 const api = supertest(app)
 
@@ -53,6 +53,22 @@ test('a new blog can be added ', async () => {
   assert.strictEqual(response.body.length, helper.blogs.length + 1)
   assert.deepStrictEqual(newBlogResponse, newBlog)
 })
+
+// test('a blog can be deleted', async () => {
+//   const blogsAtStart = await helper.blogsInDb()
+//   const blogToDelete = blogsAtStart[0]
+
+//   await api
+//     .delete(`/api/blogs/${blogToDelete.id}`)
+//     .expect(204)
+
+//   const blogsAtEnd = await helper.blogsInDb()
+
+//   const titles = blogsAtEnd.map(n => n.title)
+//   assert(!titles.includes(blogToDelete.title))
+
+//   assert.strictEqual(blogsAtEnd.length, helper.blogs.length - 1)
+// })
 
 after(async () => {
   await mongoose.connection.close()
