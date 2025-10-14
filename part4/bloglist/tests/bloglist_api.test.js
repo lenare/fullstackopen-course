@@ -26,10 +26,32 @@ test('unique identifier is named `id`', async () => {
   const response = await api
     .get('/api/blogs')
 
-    response.body.forEach(blog => {
-      assert(blog.id) // returns false if blog.id is undefined or null
-    });
-  
+  response.body.forEach(blog => {
+    assert(blog.id) // returns false if blog.id is undefined or null
+  });
+})
+
+test('a new blog can be added ', async () => {
+  const newBlog = {
+    title: 'New Blog',
+    author: 'New Author',
+    url: 'foo.bar',
+    likes: 10,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+
+  // Don't include __v and id in newBlogResponse object
+  const { __v, id, ...newBlogResponse } = response.body.find(blog => blog.title === newBlog.title)
+
+  assert.strictEqual(response.body.length, helper.blogs.length + 1)
+  assert.deepStrictEqual(newBlogResponse, newBlog)
 })
 
 after(async () => {
