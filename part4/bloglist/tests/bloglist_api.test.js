@@ -22,6 +22,16 @@ test('correct amount of blogs are returned as json', async () => {
   assert.strictEqual(response.body.length, 6)
 })
 
+test('unique identifier is named `id`', async () => {
+  const response = await api
+    .get('/api/blogs')
+
+    response.body.forEach(blog => {
+      assert(blog.id) // returns false if blog.id is undefined or null
+    });
+  
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
