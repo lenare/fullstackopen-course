@@ -54,21 +54,38 @@ test('a new blog can be added ', async () => {
   assert.deepStrictEqual(newBlogResponse, newBlog)
 })
 
-// test('a blog can be deleted', async () => {
-//   const blogsAtStart = await helper.blogsInDb()
-//   const blogToDelete = blogsAtStart[0]
+test('a blog can be deleted', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[0]
 
-//   await api
-//     .delete(`/api/blogs/${blogToDelete.id}`)
-//     .expect(204)
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
 
-//   const blogsAtEnd = await helper.blogsInDb()
+  const blogsAtEnd = await helper.blogsInDb()
 
-//   const titles = blogsAtEnd.map(n => n.title)
-//   assert(!titles.includes(blogToDelete.title))
+  const titles = blogsAtEnd.map(n => n.title)
+  assert(!titles.includes(blogToDelete.title))
 
-//   assert.strictEqual(blogsAtEnd.length, helper.blogs.length - 1)
-// })
+  assert.strictEqual(blogsAtEnd.length, helper.blogs.length - 1)
+})
+
+test('likes of a blog can be updated', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToUpdate = blogsAtStart[0]
+  blogToUpdate.likes = 10
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(blogToUpdate)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  const updatedBlog = blogsAtEnd.find(n => n.id === blogToUpdate.id)
+
+  assert.strictEqual(updatedBlog.likes, blogToUpdate.likes)
+})
 
 after(async () => {
   await mongoose.connection.close()
