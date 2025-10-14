@@ -9,20 +9,7 @@ test('dummy returns one', () => {
   assert.strictEqual(result, 1)
 })
 
-
-describe('total likes', () => {
-  const listWithOneBlog = [
-    {
-      _id: '5a422aa71b54a676234d17f8',
-      title: 'Go To Statement Considered Harmful',
-      author: 'Edsger W. Dijkstra',
-      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-      likes: 5,
-      __v: 0
-    }
-  ]
-
-  const blogs = [
+const blogs = [
     {
         _id: "5a422a851b54a676234d17f7",
         title: "React patterns",
@@ -73,6 +60,19 @@ describe('total likes', () => {
     }  
   ]
 
+
+describe('total likes', () => {
+  const listWithOneBlog = [
+    {
+      _id: '5a422aa71b54a676234d17f8',
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+      likes: 5,
+      __v: 0
+    }
+  ]
+
   test('of empty list is zero', () => {
     const result = listHelper.totalLikes([])
     assert.strictEqual(result, 0)
@@ -89,3 +89,7 @@ describe('total likes', () => {
   })
 
 })
+
+module.exports = {
+  blogs
+}
